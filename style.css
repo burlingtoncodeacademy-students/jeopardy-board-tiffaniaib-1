@@ -3,24 +3,27 @@
 }
 
 body {
-    background: radial-gradient(circle, #227C9D, #FE6D73);
+    background-image: url(/assets/body-image.jpg);
 }
 
 #container {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 }
 
 h1 {
     font-size: 3em;
+    color: #FFCB77;
+    font-family: 'Cinzel', serif;
 }
 
 #hero {
     width: 70vw;
     height: 30em;
-    object-fit: cover;
+   background-image: url(/assets/hero.avif);
+   background-repeat: repeat-x;
     margin-bottom: 2em;
 }
 
@@ -28,9 +31,13 @@ h1 {
     width: 20em;
     height: 4em;
     margin-bottom: 10em;
-    border: 5px solid #227C9D;
+    border: 5px solid #ffd700;
     border-radius: 10px;
     cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-weight: lighter;
+    background-color: #000;
+    color: #FFCB77;
 }
 
 #button-play:hover {
@@ -40,6 +47,8 @@ h1 {
 
 footer a {
     text-decoration: none;
+    font-family: 'Cinzel', serif;
+    color: #FFCB77;
 }
 
 footer a:hover {
