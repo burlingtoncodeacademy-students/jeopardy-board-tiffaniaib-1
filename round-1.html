@@ -1,14 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jeopardy</title>
-  </head>
-  <body>
-    <h1>Round One</h1>
-    <!-- Do not change the script source. Allows import/export to work. -->
-    <script src="./scripts/index.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="round-1-2.css">
+  <title>Jeopardy</title>
+</head>
+
+<body>
+  <h1>Round One</h1>
+  <h2>Player 1</h2>
+  <div id="table">
+    <table>
+      <thead>
+        <tr>
+          <th>Nature</th>
+          <th>Animals</th>
+          <th>Mythology</th>
+          <th>History</th>
+          <th>Computers</th>
+          <th>Science</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>100</td>
+          <td>100</td>
+          <td>100</td>
+          <td>100</td>
+          <td>100</td>
+          <td>100</td>
+        </tr>
+        <tr>
+          <td>200</td>
+          <td>200</td>
+          <td>200</td>
+          <td>200</td>
+          <td>200</td>
+          <td>200</td>
+        </tr>
+        <tr>
+          <td>300</td>
+          <td>300</td>
+          <td>300</td>
+          <td>300</td>
+          <td>300</td>
+          <td>300</td>
+        </tr>
+        <tr>
+          <td>400</td>
+          <td>400</td>
+          <td>400</td>
+          <td>400</td>
+          <td>400</td>
+          <td>400</td>
+        </tr>
+        <tr>
+          <td>500</td>
+          <td>500</td>
+          <td>500</td>
+          <td>500</td>
+          <td>500</td>
+          <td>500</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <section id="user">
+    <input placeholder="User Input.." id="answer">
+
+    <div id="buttons">
+      <button type="guess">GUESS</button>
+      <button type="pass">PASS</button>
+    </div>
+  </section>
+
+  <section id="score">
+    <p>Player 1 Score: <span>0</span></p>
+    <p>Player 2 Score: <span>0</span></p>
+  </section>
+
+  <button>Next Round</button>
+
+  <footer>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contact Us</a>
+  </footer>
+
+  <!-- Do not change the script source. Allows import/export to work. -->
+  <script src="./scripts/index.js" type="module"></script>
+</body>
+
 </html>
