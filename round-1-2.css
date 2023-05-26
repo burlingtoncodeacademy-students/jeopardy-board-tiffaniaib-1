@@ -28,7 +28,8 @@ table {
     color: #000;
 }
 
-th, td {
+th,
+td {
     border: 3px solid #670404;
     font-family: 'Cinzel', serif;
     font-weight: 400;
@@ -41,12 +42,26 @@ td {
     color: #a17f1a;
 }
 
-#answer {
+#div-user-buttons {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#user-input {
     width: 15em;
     height: 2em;
 }
 
-footer a {
+.user-buttons {
+    font-family: 'Cinzel', serif;
+}
+
+.user-buttons:hover {
+    font-size: larger;
+}
+
+footer>a {
     text-decoration: none;
     font-family: 'Cinzel', serif;
     color: #FFCB77;
