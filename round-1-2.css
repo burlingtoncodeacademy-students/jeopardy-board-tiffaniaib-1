@@ -61,7 +61,32 @@ td {
     font-size: larger;
 }
 
-footer>a {
+#score {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#score > p {
+    color: #a17f1a;
+}
+
+#next-round {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+
+#next-round-btn {
+    background-color: #670404;
+    color: #FEF9EF;
+    font-family: 'Cinzel', serif;
+    height: 4em;
+    padding: auto 1em 0 1em;
+    cursor: pointer;
+}
+
+footer > a {
     text-decoration: none;
     font-family: 'Cinzel', serif;
     color: #FFCB77;
