@@ -13,17 +13,32 @@ body {
     align-items: center;
 }
 
+#container:hover h1 {
+    color: #FFCB77; 
+    animation: movement 1s ease-in forwards;
+}
+
+@keyframes movement {
+    100% {
+        transform: translateX(50%);
+    }
+
+    20% {
+        transform: translateY(50%);
+    }
+}
 h1 {
     font-size: 3em;
-    color: #FFCB77;
+    color: #670404;
     font-family: 'Cinzel', serif;
+    align-self: flex-start;
 }
 
 #hero {
     width: 70vw;
     height: 30em;
-   background-image: url(/assets/hero.avif);
-   background-repeat: repeat-x;
+    background-image: url(/assets/hero.avif);
+    background-repeat: repeat-x;
     margin-bottom: 2em;
 }
 
