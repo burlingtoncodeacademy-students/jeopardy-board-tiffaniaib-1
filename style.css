@@ -6,6 +6,11 @@ body {
     background-image: url(/assets/body-image.jpg);
 }
 
+body:hover h1 {
+    color: #FFCB77; 
+    animation: movement 1s ease-in forwards;
+}
+
 #container {
     display: flex;
     flex-direction: column;
@@ -13,25 +18,16 @@ body {
     align-items: center;
 }
 
-#container:hover h1 {
-    color: #FFCB77; 
-    animation: movement 1s ease-in forwards;
-}
-
 @keyframes movement {
     100% {
-        transform: translateX(50%);
-    }
-
-    20% {
-        transform: translateY(50%);
+        transform: translateY(100%);
     }
 }
 h1 {
     font-size: 3em;
-    color: #670404;
     font-family: 'Cinzel', serif;
-    align-self: flex-start;
+    color:#FFCB77;
+    text-shadow: 2px 2px #670404;
 }
 
 #hero {
