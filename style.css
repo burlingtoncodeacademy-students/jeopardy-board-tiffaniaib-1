@@ -6,11 +6,6 @@ body {
     background-image: url(/assets/body-image.jpg);
 }
 
-body:hover h1 {
-    color: #FFCB77; 
-    animation: movement 1s ease-in forwards;
-}
-
 #container {
     display: flex;
     flex-direction: column;
@@ -18,17 +13,12 @@ body:hover h1 {
     align-items: center;
 }
 
-@keyframes movement {
-    100% {
-        transform: translateY(100%);
-    }
-}
 h1 {
     font-size: 3em;
     font-family: 'Press Start 2P', cursive;
     color:#FFCB77;
     text-shadow: 2px 2px #670404;
-}
+} 
 
 #hero {
     width: 70vw;
