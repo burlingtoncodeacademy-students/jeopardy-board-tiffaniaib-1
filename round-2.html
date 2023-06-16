@@ -90,12 +90,16 @@
     </tbody>
   </table>
 
-  <section>
-    <input placeholder="User Input.." id="user-input">
+  <section id="modal">
+    <div class="modal-content">
+      <h2 id="question"></h2>
+      <br>
+      <input placeholder="User Input.." id="input-answer">
 
-    <div id="div-user-buttons">
-      <button type="guess" class="user-buttons">GUESS</button>
-      <button type="pass" class="user-buttons">PASS</button>
+      <div id="div-user-buttons">
+        <button type="guess" class="user-buttons" id="guess-btn">GUESS</button>
+        <button type="pass" class="user-buttons" id="pass-btn">PASS</button>
+      </div>
     </div>
   </section>
 
@@ -104,7 +108,7 @@
     <p>Player 2 Score: <span>0</span></p>
   </section>
 
-  <div id="next-round">
+  <div id="next-round" class="user-buttons">
     <a href="final-jeopardy.html"><button id="next-round-btn">Next Round</button></a>
   </div>
 
