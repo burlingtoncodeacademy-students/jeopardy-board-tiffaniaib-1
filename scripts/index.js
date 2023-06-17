@@ -1,7 +1,16 @@
+
+// ? Players
+const player1 = "Player One";
+const player2 = "Player Two";
+const playersStates = {
+    player1: ["player2"],
+    player2: ["player1"]
+}
+let currentPlayer = player1;
+
 //? These are our containers to store our data:
 const tableCells = document.querySelectorAll(".clickable-item"); 
 const modal = document.querySelector("#modal");
-const userButtons = document.getElementsByClassName("user-buttons");
 const guessButton = document.querySelectorAll("#guess-btn");
 const passButton = document.querySelector("#pass-btn");
 const nextRoundButton = document.querySelectorAll("#next-round-btn")
@@ -9,12 +18,18 @@ let inputAnswer = document.querySelectorAll("#input-answer");
 let inputBet = document.getElementById("input-bet");
 let currentQuestion;
 
-//? Questions
+//? Imports
 // Do not change the import statement
 import placeholderQuestions from "./placeholder-questions.js";
 console.log({ placeholderQuestions });
+import {showPlayersTurn, switchPlayer} from "./functions.js"
 
-//? DIVIDING OF THE QUESTIONS IN CATEGORIES
+
+window.addEventListener("load", () => showPlayersTurn(currentPlayer)); // notification for player's turn
+
+//? Questions
+// Questions are organized by categoy using the .filter() method 
+// it works because we have them in an array
 const questionsNature = placeholderQuestions
     //We get all the questions in the "Nature" category using the filter() method
     .filter((question) => question.category === "Nature");

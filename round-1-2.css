@@ -124,6 +124,9 @@ footer a:hover {
   font-family: "Comfortaa", cursive;
   border-radius: 10px;
   text-align: center;
-  font-size: 10px;
-  color:#670404;
+}
+
+#question {
+    color: #670404;
+    font-size: 12px;
 }
