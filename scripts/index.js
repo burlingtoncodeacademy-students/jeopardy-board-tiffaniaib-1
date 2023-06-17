@@ -11,10 +11,10 @@ let currentPlayer = player1;
 //? These are our containers to store our data:
 const tableCells = document.querySelectorAll(".clickable-item"); 
 const modal = document.querySelector("#modal");
-const guessButton = document.querySelectorAll("#guess-btn");
+const guessButton = document.querySelector("#guess-btn");
 const passButton = document.querySelector("#pass-btn");
 const nextRoundButton = document.querySelectorAll("#next-round-btn")
-let inputAnswer = document.querySelectorAll("#input-answer");
+let inputAnswer = document.querySelector("#input-answer");
 let inputBet = document.getElementById("input-bet");
 let currentQuestion;
 
@@ -88,13 +88,16 @@ tableCells.forEach(c => c.addEventListener("click", function () { //every time w
     const questionDisplay = document.querySelector("#question");
     questionDisplay.textContent = currentQuestion.question;
 
-    guessButton.onclick = function () {
+    guessButton.onclick = function (offSet) {
         const playerAnswer = inputAnswer.value;
-        modal.style.display = "none"; //to close the modal we need to set the display property to "none"
+        if (playerAnswer === currentQuestion.answer) {
+            console.log(`add ${offSet}00`)
+        }
+        modal.style.display = "none"; 
     }
 
     passButton.onclick = function () {
-        modal.style.display = "none";
+        modal.style.display = "none"; //to close the modal we need to set the display property to "none"
     }
 
 })

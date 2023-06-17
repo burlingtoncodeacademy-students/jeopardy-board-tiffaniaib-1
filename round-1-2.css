@@ -128,5 +128,6 @@ footer a:hover {
 
 #question {
     color: #670404;
-    font-size: 12px;
+    font-size: 18px;
+    line-height: 2em;
 }
