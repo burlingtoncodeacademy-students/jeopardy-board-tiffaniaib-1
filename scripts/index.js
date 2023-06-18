@@ -1,5 +1,5 @@
 
-// ? Players
+// Players
 const player1 = "Player One";
 const player2 = "Player Two";
 const playersStates = {
@@ -8,8 +8,14 @@ const playersStates = {
 }
 let currentPlayer = player1;
 
+// Scores
+let scoreDsiplay1 = document.getElementById("scoreP1");
+let scoreDisplay2 = document.getElementById("scoreP2");
+let scorePlayer1 = 0;
+let scorePlayer2 = 0;
+
 //? These are our containers to store our data:
-const tableCells = document.querySelectorAll(".clickable-item"); 
+const tableCells = document.querySelectorAll(".clickable-item");
 const modal = document.querySelector("#modal");
 const guessButton = document.querySelector("#guess-btn");
 const passButton = document.querySelector("#pass-btn");
@@ -22,7 +28,7 @@ let currentQuestion;
 // Do not change the import statement
 import placeholderQuestions from "./placeholder-questions.js";
 console.log({ placeholderQuestions });
-import {showPlayersTurn, switchPlayer} from "./functions.js"
+import { showPlayersTurn, switchPlayer } from "./functions.js"
 
 
 window.addEventListener("load", () => showPlayersTurn(currentPlayer)); // notification for player's turn
@@ -88,13 +94,31 @@ tableCells.forEach(c => c.addEventListener("click", function () { //every time w
     const questionDisplay = document.querySelector("#question");
     questionDisplay.textContent = currentQuestion.question;
 
-    guessButton.onclick = function (offSet) {
+    guessButton.addEventListener("click", function () {
         const playerAnswer = inputAnswer.value;
         if (playerAnswer === currentQuestion.answer) {
-            console.log(`add ${offSet}00`)
+            const points = parseInt(offSet) * 100;
+            if (currentPlayer === player1) {
+                scorePlayer1 += points;
+                scoreDsiplay1.textContent = scorePlayer1;
+            } else if (currentPlayer === player2) {
+                scorePlayer2 += points;
+                scoreDisplay2.textContent = scorePlayer2;
+            }
+        } else {
+            const points = parseInt(offSet) * 100;
+            if (currentPlayer === player1) {
+                scorePlayer1 -= points;
+                scoreDsiplay1.textContent = scorePlayer1;
+            } else if (currentPlayer === player2) {
+                scorePlayer2 -= points;
+                scoreDisplay2.textContent = scorePlayer2;
+            }
         }
-        modal.style.display = "none"; 
-    }
+        modal.style.display = "none";
+    });
+
+
 
     passButton.onclick = function () {
         modal.style.display = "none"; //to close the modal we need to set the display property to "none"

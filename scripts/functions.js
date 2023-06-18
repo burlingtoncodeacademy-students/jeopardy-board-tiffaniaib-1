@@ -5,7 +5,7 @@ function showPlayersTurn(currentPlayer) {
     // when at this URL we won't show the alert
 
     let currentPageURL = window.location.href;
-    if (currentPageURL === "http://127.0.0.1:5501/") { 
+    if (currentPageURL === "http://127.0.0.1:5501/") {
         return;
     } else {
         alert(`It's ${currentPlayer}'s turn!`);
@@ -15,9 +15,10 @@ function showPlayersTurn(currentPlayer) {
     }
 }
 
-function switchPlayer () {
+function switchPlayer() {
     newPlayer = playersStates[currentPlayer];
     currentPlayer = newPlayer;
 }
+
 
 export { showPlayersTurn, switchPlayer };
