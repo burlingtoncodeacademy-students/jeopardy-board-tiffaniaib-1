@@ -1,15 +1,20 @@
-
 // Players
 const player1 = "Player One";
 const player2 = "Player Two";
-const playersStates = {
-    player1: ["player2"],
-    player2: ["player1"]
-}
+
 let currentPlayer = player1;
+let originalPlayer = player1; // Original player who chose the question
+
+function switchPlayer() {
+    if (currentPlayer === player1) {
+        return player2;
+    } else {
+        return player1;
+    }
+}
 
 // Scores
-let scoreDsiplay1 = document.getElementById("scoreP1");
+let scoreDisplay1 = document.getElementById("scoreP1");
 let scoreDisplay2 = document.getElementById("scoreP2");
 let scorePlayer1 = 0;
 let scorePlayer2 = 0;
@@ -23,12 +28,13 @@ const nextRoundButton = document.querySelectorAll("#next-round-btn")
 let inputAnswer = document.querySelector("#input-answer");
 let inputBet = document.getElementById("input-bet");
 let currentQuestion;
+let offSet;
 
 //? Imports
 // Do not change the import statement
 import placeholderQuestions from "./placeholder-questions.js";
 console.log({ placeholderQuestions });
-import { showPlayersTurn, switchPlayer } from "./functions.js"
+import { showPlayersTurn } from "./functions.js"
 
 
 window.addEventListener("load", () => showPlayersTurn(currentPlayer)); // notification for player's turn
@@ -79,7 +85,7 @@ tableCells.forEach(c => c.addEventListener("click", function () { //every time w
     //The category will help us undertand which category of questions we have to pull out,
     //the value will determine what number is that question inside the category
 
-    const offSet = value[1];
+    offSet = value[1];
 
     //Let's turn the offSet into a number calling parseInt, so we can use it to see how far we to go into the array
     const offSetToNumber = parseInt(offSet) - 1; //Since the index counting starts from 0 in order to get the right number we have to subtract 1
@@ -94,37 +100,51 @@ tableCells.forEach(c => c.addEventListener("click", function () { //every time w
     const questionDisplay = document.querySelector("#question");
     questionDisplay.textContent = currentQuestion.question;
 
-    guessButton.addEventListener("click", function () {
-        const playerAnswer = inputAnswer.value;
-        if (playerAnswer === currentQuestion.answer) {
-            const points = parseInt(offSet) * 100;
-            if (currentPlayer === player1) {
-                scorePlayer1 += points;
-                scoreDsiplay1.textContent = scorePlayer1;
-            } else if (currentPlayer === player2) {
-                scorePlayer2 += points;
-                scoreDisplay2.textContent = scorePlayer2;
-            }
-        } else {
-            const points = parseInt(offSet) * 100;
-            if (currentPlayer === player1) {
-                scorePlayer1 -= points;
-                scoreDsiplay1.textContent = scorePlayer1;
-            } else if (currentPlayer === player2) {
-                scorePlayer2 -= points;
-                scoreDisplay2.textContent = scorePlayer2;
-            }
-        }
-        modal.style.display = "none";
-    });
-
-
-
-    passButton.onclick = function () {
-        modal.style.display = "none"; //to close the modal we need to set the display property to "none"
-    }
-
 })
 )
 
+guessButton.addEventListener("click", function () {
+    const playerAnswer = inputAnswer.value;
+    const points = parseInt(offSet) * 100;
+    if (playerAnswer === currentQuestion.answer) {
+        switch (currentPlayer) {
+            case player1:
+                scorePlayer1 += points;
+                scoreDisplay1.textContent = scorePlayer1;
+                break;
+            case player2:
+                scorePlayer2 += points;
+                scoreDisplay2.textContent = scorePlayer2;
+                break;
+        }
+    } else {
+        switch (currentPlayer) {
+            case player1:
+                scorePlayer1 -= points;
+                scoreDisplay1.textContent = scorePlayer1;
+                break;
+            case player2:
+                scorePlayer2 -= points;
+                scoreDisplay2.textContent = scorePlayer2;
+                break;
+        }
+
+        if (currentPlayer !== originalPlayer) {
+            // Allow the other player to answer the question
+            alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
+            switchPlayer(currentPlayer); // Call the switchPlayer function to handle the turn switching
+        } else {
+            // If no one answered correctly, the original player gets to choose a new question
+            alert("Neither player answered correctly. Original player can choose a new question.");
+        }
+    }
+    modal.style.display = "none";
+});
+
+passButton.addEventListener("click", function () {
+    currentPlayer = switchPlayer();
+    alert(`${currentPlayer}, it's your turn to answer.`);
+    console.log(currentPlayer);
+    modal.style.display = "none";
+});
 

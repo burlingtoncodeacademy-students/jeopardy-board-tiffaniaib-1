@@ -15,10 +15,6 @@ function showPlayersTurn(currentPlayer) {
     }
 }
 
-function switchPlayer() {
-    newPlayer = playersStates[currentPlayer];
-    currentPlayer = newPlayer;
-}
 
 
-export { showPlayersTurn, switchPlayer };
+export { showPlayersTurn };
