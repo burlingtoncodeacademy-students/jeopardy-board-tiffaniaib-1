@@ -1,0 +1,1 @@
+const buttonToFinal = document.getElementById("next-round-btn");

@@ -96,8 +96,8 @@
     <input placeholder="User Input.." id="input-answer">
 
     <div id="div-user-buttons">
-      <button type="guess" class="user-buttons" id="guess-btn">GUESS</button>
-      <button type="pass" class="user-buttons" id="pass-btn">PASS</button>
+      <button type="guess" class="user-buttons" id="guess-btn" disabled>GUESS</button>
+      <button type="pass" class="user-buttons" id="pass-btn" disabled>PASS</button>
     </div>
   </div>
   </section>
@@ -108,7 +108,7 @@
   </section>
 
   <div id="next-round" class="user-buttons">
-    <a href="round-2.html"><button id="next-round-btn">Next Round</button></a>
+    <button id="next-round-btn" disabled>Next Round</button>
   </div>
 
   <footer>
@@ -118,7 +118,7 @@
   </footer>
 
   <!-- Do not change the script source. Allows import/export to work. -->
-  <script src="./scripts/index.js" type="module"></script>
+  <script src="./scripts/round-1.js" type="module"></script>
 </body>
 
 </html>
