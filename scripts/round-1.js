@@ -1,10 +1,10 @@
 const buttonToRound2 = document.getElementById("next-round-btn").addEventListener("click", function () {
     window.location.href = "round-2.html";
 });
+window.addEventListener("load", showPlayersTurn); 
 
 //? These are our containers to store our data:
 const tableCells = document.querySelectorAll(".clickable-item");
-const playButton = document.getElementById("button-play");
 const guessButton = document.querySelector("#guess-btn");
 const passButton = document.querySelector("#pass-btn");
 const nextRoundButton = document.querySelectorAll("#next-round-btn")
@@ -13,7 +13,7 @@ let inputBet = document.getElementById("input-bet");
 //--------------------------------------------------------------------
 const modal = document.querySelector("#modal");
 let currentQuestion;
-let offSet;
+
 
 //? Functions
 function switchPlayer() {
@@ -27,7 +27,7 @@ function switchPlayer() {
 }
 
 // Function to display the alert
-function showPlayersTurn(currentPlayer) {
+function showPlayersTurn() {
     // We want for the alert to be displayed in all the pages but the index.html
     // const urlIndexHTML = window.location.href --> http://127.0.0.1:5501/
     // when at this URL we won't show the alert
@@ -98,18 +98,19 @@ const qmap = {
     general: questionsGeneral,
     final: questionFinal
 }
+let offSet = 0;
 
 //? CELLS AND CORRISPONDING OF QUESTIONS
 // We add an event listener to each cell of the table
 tableCells.forEach(c => {
     c.addEventListener("click", function () {
         if (c.dataset.selected === "true") {
-            alert("Please answer or pass the current question.");
+            alert("Please pick a question.");
             return;
         }
 
         const [category, value] = c.classList;
-        const offSet = value[1];
+        offSet = value[1];
 
         const offSetToNumber = parseInt(offSet) - 1;
 
@@ -126,68 +127,67 @@ tableCells.forEach(c => {
 
         // Update the selected state of the cell
         c.dataset.selected = "true";
+        c.style.backgroundColor = "rgba(103, 4, 4, 0.8)";
 
-        c.style.backgroundColor = "rgba(103, 4, 4, 0.8)"; // Opaque red color
-    });
-
-    guessButton.addEventListener("click", function () {
-        const playerAnswer = inputAnswer.value;
-        const points = parseInt(offSet) * 100;
-        if (playerAnswer === currentQuestion.answer) {
-            switch (currentPlayer) {
-                case player1:
-                    scorePlayer1 += points;
-                    scoreDisplay1.textContent = scorePlayer1;
-                    break;
-                case player2:
-                    scorePlayer2 += points;
-                    scoreDisplay2.textContent = scorePlayer2;
-                    break;
-            }
-            // Check if either player has reached 15,000 points
-            if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
-                alert("Congratulations! Move on to Round 2.");
-                // Enable the "Round 2" button
-                buttonToRound2.disabled = false;
-            }
-            // Clear the current question
-            // currentQuestion = null;
-            // modal.style.display = "none";
-            // c.style.backgroundColor = "#670404";
-            // c.innerHTML = "";
-            // c.classList.remove("clickable-item");
-    
-            // Check if the board has been cleared
-            const allCellsSelected = Array.from(tableCells).every(
-                cell => cell.dataset.selected === "true"
-            );
-            if (allCellsSelected) {
-                alert("Board cleared! Move on to Round 2.");
-                // Enable the "Round 2" button
-                buttonToRound2.disabled = false;
-            }
-        } else {
-            switch (currentPlayer) {
-                case player1:
-                    scorePlayer1 -= points;
-                    scoreDisplay1.textContent = scorePlayer1;
-                    break;
-                case player2:
-                    scorePlayer2 -= points;
-                    scoreDisplay2.textContent = scorePlayer2;
-                    break;
-            }
-    
-            if (currentPlayer !== originalPlayer) {
-                // Allow the other player to answer the question
-                alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
-                switchPlayer(currentPlayer); // Call the switchPlayer function to handle the turn switching
+        guessButton.addEventListener("click", function () {
+            const playerAnswer = inputAnswer.value;
+            const points = parseInt(offSet) * 100;
+            if (playerAnswer === currentQuestion.answer) {
+                switch (currentPlayer) {
+                    case player1:
+                        scorePlayer1 += points;
+                        scoreDisplay1.textContent = scorePlayer1;
+                        break;
+                    case player2:
+                        scorePlayer2 += points;
+                        scoreDisplay2.textContent = scorePlayer2;
+                        break;
+                }
+                // Check if either player has reached 15,000 points
+                if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
+                    alert("Congratulations! Move on to Round 2.");
+                    // Enable the "Round 2" button
+                    buttonToRound2.disabled = false;
+                }
+                // To disable the cell
+                currentQuestion = null;
+                modal.style.display = "none";
+                c.innerHTML = "";
+                c.classList.remove("clickable-item");
+        
+                // Check if the board has been cleared
+                const allCellsSelected = Array.from(tableCells).every(
+                    cell => cell.dataset.selected === "true"
+                );
+                if (allCellsSelected) {
+                    alert("Board cleared! Move on to Round 2.");
+                    // Enable the "Round 2" button
+                    buttonToRound2.disabled = false;
+                }
             } else {
-                // If no one answered correctly, the original player gets to choose a new question
-                alert("Neither player answered correctly. Original player can choose a new question.");
+                switch (currentPlayer) {
+                    case player1:
+                        scorePlayer1 -= points;
+                        scoreDisplay1.textContent = scorePlayer1;
+                        break;
+                    case player2:
+                        scorePlayer2 -= points;
+                        scoreDisplay2.textContent = scorePlayer2;
+                        break;
+                }
+        
+                if (currentPlayer !== originalPlayer) {
+                    // Allow the other player to answer the question
+                    alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
+                    switchPlayer(currentPlayer); // Call the switchPlayer function to handle the turn switching
+                } else {
+                    // If no one answered correctly, the original player gets to choose a new question
+                    alert("Neither player answered correctly. Original player can choose a new question.");
+                }
             }
-        }
-        modal.style.display = "none";
+            inputAnswer.value = "";
+            modal.style.display = "none";
+        });
     });
     
     passButton.addEventListener("click", function () {
