@@ -1,7 +1,17 @@
-const buttonToRound2 = document.getElementById("next-round-btn").addEventListener("click", function () {
+//? Import
+// Do not change the import statement
+import placeholderQuestions from "./placeholder-questions.js";
+console.log({ placeholderQuestions });
+
+const buttonToRound2 = document.getElementById("next-round-btn");
+console.log(buttonToRound2);
+buttonToRound2.addEventListener("click", function () {
     window.location.href = "round-2.html";
 });
-window.addEventListener("load", showPlayersTurn);
+
+window.addEventListener("load", function() {
+    alert(`It's ${currentPlayer}'s turn!`);
+});
 
 //? These are our containers to store our data:
 const tableCells = document.querySelectorAll(".clickable-item");
@@ -9,7 +19,9 @@ const guessButton = document.querySelector("#guess-btn");
 const passButton = document.querySelector("#pass-btn");
 const nextRoundButton = document.querySelectorAll("#next-round-btn")
 let inputAnswer = document.querySelector("#input-answer");
-let inputBet = document.getElementById("input-bet");
+
+
+
 //--------------------------------------------------------------------
 const modal = document.querySelector("#modal");
 let currentQuestion;
@@ -18,12 +30,8 @@ let words;  // the value to this variable will be assigned in the function Title
 
 //? Functions
 function changePlayer() {
-    if (currentPlayer === player1) {
-        currentPlayer = player2;
-    } else {
-        currentPlayer = player1;
-    }
-    playersTurnDisplay.textContent = currentPlayer; // Update the text content of the playersTurnDisplay (h2 element)
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
+    playersTurnDisplay.textContent = currentPlayer;
     return currentPlayer;
 }
 
@@ -44,13 +52,8 @@ function showPlayersTurn() {
     }
 }
 
-function titleize(playerAnswer) {
-    let answerToCompare = playerAnswer.toLowerCase();
-    words = answerToCompare.split(" ").map(word => word = word[0].toUpperCase() + word.slice(1)).join(" ");
-}
-
 function otherPlayerTries() {
-  changePlayer();
+    changePlayer();
     alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
     if (words === currentQuestion.answer) {
         switch (currentPlayer) {
@@ -65,9 +68,9 @@ function otherPlayerTries() {
         }
         // Check if either player has reached 15,000 points
         if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
+            console.log(`this line`)
             alert("Congratulations! Move on to Round 2.");
-
-            buttonToRound2.disabled = false; // Enable the "Round 2" button
+            nextRoundButton.removeAttribute("disabled") // Enable the "Round 2" button
         }
         // To disable the cell
         currentQuestion = null;
@@ -97,6 +100,12 @@ function otherPlayerTries() {
                 break;
         }
     }
+    // Disable the "Round 2" button if neither player has reached 15,000 points
+    if (scorePlayer1 < 15000 && scorePlayer2 < 15000) {
+        console.log(`this line`)
+        alert("Congratulations! Move on to Round 2.");
+        buttonToRound2.removeAttribute("disabled");
+    }
 }
 
 //? Players
@@ -111,10 +120,6 @@ let scoreDisplay2 = document.getElementById("scoreP2");
 let scorePlayer1 = 0;
 let scorePlayer2 = 0;
 
-//? Import
-// Do not change the import statement
-import placeholderQuestions from "./placeholder-questions.js";
-console.log({ placeholderQuestions });
 
 //? Questions
 // Questions are organized by categoy using the .filter() method 
@@ -186,9 +191,8 @@ tableCells.forEach(c => {
         guessButton.addEventListener("click", function () {
             const playerAnswer = inputAnswer.value;
             const points = parseInt(offSet) * 100;
-            titleize(playerAnswer);
             // RIGHT ANSWER
-            if (words === currentQuestion.answer) {
+            if (playerAnswer.toLowerCase() === currentQuestion.answer.toLowerCase()) {
                 switch (currentPlayer) {
                     case player1:
                         scorePlayer1 += points;
@@ -202,8 +206,7 @@ tableCells.forEach(c => {
                 // Check if either player has reached 15,000 points
                 if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
                     alert("Congratulations! Move on to Round 2.");
-
-                    buttonToRound2.disabled = false; // Enable the "Round 2" button
+                    nextRoundButton.removeAttribute("disabled");
                 }
                 // To disable the cell
                 currentQuestion = null;
@@ -217,11 +220,10 @@ tableCells.forEach(c => {
                 );
                 if (allCellsSelected) {
                     alert("Board cleared! Move on to Round 2.");
-
-                    buttonToRound2.disabled = false; // Enable the "Round 2" button
+                    nextRoundButton.removeAttribute("disabled");
                 }
                 // WRONG ANSWER
-            } else {
+            } else if (words !== currentQuestion.answer) {
                 switch (currentPlayer) {
                     case player1:
                         scorePlayer1 -= points;
@@ -238,13 +240,22 @@ tableCells.forEach(c => {
             modal.style.display = "none";
         });
     });
-
-    passButton.addEventListener("click", function () {
-        currentPlayer = changePlayer();
-        alert(`${currentPlayer}, it's your turn to answer.`);
-    });
 });
 
 
 
-
+passButton.addEventListener("click", function () {
+    const points = parseInt(offSet) * 100;
+    switch (currentPlayer) {
+        case player1:
+            scorePlayer1 -= points;
+            scoreDisplay1.textContent = scorePlayer1;
+            break;
+        case player2:
+            scorePlayer2 -= points;
+            scoreDisplay2.textContent = scorePlayer2;
+            break;
+    }
+    currentPlayer = changePlayer();
+    alert(`${currentPlayer}, it's your turn to answer.`);
+});

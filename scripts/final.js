@@ -1,6 +1,6 @@
 let categoryDisplay = document.getElementById("final-category");
-let betInput = document.getElementById("input-bet");
 let betButton = document.getElementById("user-input-btn");
+let inputBet = document.getElementById("input-bet");
 
   //? Import
 // Do not change the import statement
