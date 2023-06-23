@@ -13,11 +13,11 @@ let inputBet = document.getElementById("input-bet");
 //--------------------------------------------------------------------
 const modal = document.querySelector("#modal");
 let currentQuestion;
-let words;
+let words;  // the value to this variable will be assigned in the function Titleize
 
 
 //? Functions
-function switchPlayer() {
+function changePlayer() {
     if (currentPlayer === player1) {
         currentPlayer = player2;
     } else {
@@ -49,159 +49,201 @@ function titleize(playerAnswer) {
     words = answerToCompare.split(" ").map(word => word = word[0].toUpperCase() + word.slice(1)).join(" ");
 }
 
-    //? Players
-    const player1 = "Player One";
-    const player2 = "Player Two";
-    const playersTurnDisplay = document.getElementById("players-turn-display");
-    let currentPlayer = player1;
-    let originalPlayer = player1; // Original player who chose the question
+function otherPlayerTries() {
+  changePlayer();
+    alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
+    if (words === currentQuestion.answer) {
+        switch (currentPlayer) {
+            case player1:
+                scorePlayer1 += points;
+                scoreDisplay1.textContent = scorePlayer1;
+                break;
+            case player2:
+                scorePlayer2 += points;
+                scoreDisplay2.textContent = scorePlayer2;
+                break;
+        }
+        // Check if either player has reached 15,000 points
+        if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
+            alert("Congratulations! Move on to Round 2.");
 
-    //? Scores
-    let scoreDisplay1 = document.getElementById("scoreP1");
-    let scoreDisplay2 = document.getElementById("scoreP2");
-    let scorePlayer1 = 0;
-    let scorePlayer2 = 0;
+            buttonToRound2.disabled = false; // Enable the "Round 2" button
+        }
+        // To disable the cell
+        currentQuestion = null;
+        modal.style.display = "none";
+        c.innerHTML = "";
+        c.classList.remove("clickable-item");
 
-    //? Import
-    // Do not change the import statement
-    import placeholderQuestions from "./placeholder-questions.js";
-    console.log({ placeholderQuestions });
+        // Check if the board has been cleared
+        const allCellsSelected = Array.from(tableCells).every(
+            cell => cell.dataset.selected === "true"
+        );
+        if (allCellsSelected) {
+            alert("Board cleared! Move on to Round 2.");
 
-    //? Questions
-    // Questions are organized by categoy using the .filter() method 
-    // it works because we have them in an array
-    const questionsNature = placeholderQuestions
-        //We get all the questions in the "Nature" category using the filter() method
-        .filter((question) => question.category === "Nature");
-
-    const questionsAnimals = placeholderQuestions
-        .filter((question) => question.category === "Animals");
-
-    const questionsComputers = placeholderQuestions
-        .filter((question) => question.category === "Computers");
-
-    const questionsMythology = placeholderQuestions
-        .filter((question) => question.category === "Mythology");
-
-    const questionsHistory = placeholderQuestions
-        .filter((question) => question.category === "History");
-
-    const questionsGeneral = placeholderQuestions
-        .filter((question) => question.category === "General");
-
-    const questionFinal = placeholderQuestions
-        .filter((question) => question.category === "Final");
-
-    //This object is a map that takes the categories (strings) and maps them to the various array of questions
-    //this way we can look up the category and we will get the questions associated to it
-    const qmap = {
-        nature: questionsNature,
-        animals: questionsAnimals,
-        computers: questionsComputers,
-        mythology: questionsMythology,
-        history: questionsHistory,
-        general: questionsGeneral,
-        final: questionFinal
+            buttonToRound2.disabled = false; // Enable the "Round 2" button
+        }
+        // WRONG ANSWER
+    } else {
+        switch (currentPlayer) {
+            case player1:
+                scorePlayer1 -= points;
+                scoreDisplay1.textContent = scorePlayer1;
+                break;
+            case player2:
+                scorePlayer2 -= points;
+                scoreDisplay2.textContent = scorePlayer2;
+                break;
+        }
     }
-    let offSet = 0;
+}
 
-    //? CELLS AND CORRISPONDING OF QUESTIONS
-    // We add an event listener to each cell of the table
-    tableCells.forEach(c => {
-        c.addEventListener("click", function () {
-            if (c.dataset.selected === "true") {
-                alert("Please pick a question.");
-                return;
-            }
+//? Players
+const player1 = "Player One";
+const player2 = "Player Two";
+const playersTurnDisplay = document.getElementById("players-turn-display");
+let currentPlayer = player1;
 
-            const [category, value] = c.classList;
-            offSet = value[1];
+//? Scores
+let scoreDisplay1 = document.getElementById("scoreP1");
+let scoreDisplay2 = document.getElementById("scoreP2");
+let scorePlayer1 = 0;
+let scorePlayer2 = 0;
 
-            const offSetToNumber = parseInt(offSet) - 1;
+//? Import
+// Do not change the import statement
+import placeholderQuestions from "./placeholder-questions.js";
+console.log({ placeholderQuestions });
 
-            alert(`Category ${category}, Worth $${offSet + '00'}`);
-            modal.style.display = "block";
+//? Questions
+// Questions are organized by categoy using the .filter() method 
+// it works because we have them in an array
+const questionsNature = placeholderQuestions
+    //We get all the questions in the "Nature" category using the filter() method
+    .filter((question) => question.category === "Nature");
 
-            currentQuestion = qmap[category][offSetToNumber];
+const questionsAnimals = placeholderQuestions
+    .filter((question) => question.category === "Animals");
 
-            const questionDisplay = document.querySelector("#question");
-            questionDisplay.textContent = currentQuestion.question;
-            guessButton.disabled = false;
-            passButton.disabled = false;
+const questionsComputers = placeholderQuestions
+    .filter((question) => question.category === "Computers");
+
+const questionsMythology = placeholderQuestions
+    .filter((question) => question.category === "Mythology");
+
+const questionsHistory = placeholderQuestions
+    .filter((question) => question.category === "History");
+
+const questionsGeneral = placeholderQuestions
+    .filter((question) => question.category === "General");
+
+const questionFinal = placeholderQuestions
+    .filter((question) => question.category === "Final");
+
+//This object is a map that takes the categories (strings) and maps them to the various array of questions
+//this way we can look up the category and we will get the questions associated to it
+const qmap = {
+    nature: questionsNature,
+    animals: questionsAnimals,
+    computers: questionsComputers,
+    mythology: questionsMythology,
+    history: questionsHistory,
+    general: questionsGeneral,
+    final: questionFinal
+}
+let offSet = 0;
+
+//? CELLS AND CORRISPONDING OF QUESTIONS
+// We add an event listener to each cell of the table
+tableCells.forEach(c => {
+    c.addEventListener("click", function () {
+        if (c.dataset.selected === "true") {
+            alert("Please pick a question.");
+            return;
+        }
+
+        const [category, value] = c.classList;
+        offSet = value[1];
+
+        const offSetToNumber = parseInt(offSet) - 1;
+
+        alert(`Category ${category}, Worth $${offSet + '00'}`);
+        modal.style.display = "block";
+
+        currentQuestion = qmap[category][offSetToNumber];
+
+        const questionDisplay = document.querySelector("#question");
+        questionDisplay.textContent = currentQuestion.question;
+        guessButton.disabled = false;
+        passButton.disabled = false;
 
 
-            // Update the selected state of the cell
-            c.dataset.selected = "true";
-            c.style.backgroundColor = "rgba(103, 4, 4, 0.8)";
+        // Update the selected state of the cell
+        c.dataset.selected = "true";
+        c.style.backgroundColor = "rgba(103, 4, 4, 0.8)";
 
-            guessButton.addEventListener("click", function () {
-                const playerAnswer = inputAnswer.value;
-                const points = parseInt(offSet) * 100;
-                let answeredCorrectly = false; // We need it to check if any player answered correctly
-                titleize(playerAnswer);
-                if (words === currentQuestion.answer) {
-                    switch (currentPlayer) {
-                        case player1:
-                            scorePlayer1 += points;
-                            scoreDisplay1.textContent = scorePlayer1;
-                            break;
-                        case player2:
-                            scorePlayer2 += points;
-                            scoreDisplay2.textContent = scorePlayer2;
-                            break;
-                    }
-                    // Check if either player has reached 15,000 points
-                    if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
-                        alert("Congratulations! Move on to Round 2.");
-                        // Enable the "Round 2" button
-                        buttonToRound2.disabled = false;
-                    }
-                    // To disable the cell
-                    currentQuestion = null;
-                    modal.style.display = "none";
-                    c.innerHTML = "";
-                    c.classList.remove("clickable-item");
-
-                    // Check if the board has been cleared
-                    const allCellsSelected = Array.from(tableCells).every(
-                        cell => cell.dataset.selected === "true"
-                    );
-                    if (allCellsSelected) {
-                        alert("Board cleared! Move on to Round 2.");
-                        // Enable the "Round 2" button
-                        buttonToRound2.disabled = false;
-                    }
-                } else {
-                    switch (currentPlayer) {
-                        case player1:
-                            scorePlayer1 -= points;
-                            scoreDisplay1.textContent = scorePlayer1;
-                            break;
-                        case player2:
-                            scorePlayer2 -= points;
-                            scoreDisplay2.textContent = scorePlayer2;
-                            break;
-                    }
-
-                    if (currentPlayer !== originalPlayer) {
-                        // Allow the other player to answer the question
-                        alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
-                        switchPlayer(currentPlayer); // Call the switchPlayer function to handle the turn switching
-                    } else {
-                        // If no one answered correctly, the original player gets to choose a new question
-                        alert("Neither player answered correctly. Original player can choose a new question.");
-                    }
+        guessButton.addEventListener("click", function () {
+            const playerAnswer = inputAnswer.value;
+            const points = parseInt(offSet) * 100;
+            titleize(playerAnswer);
+            // RIGHT ANSWER
+            if (words === currentQuestion.answer) {
+                switch (currentPlayer) {
+                    case player1:
+                        scorePlayer1 += points;
+                        scoreDisplay1.textContent = scorePlayer1;
+                        break;
+                    case player2:
+                        scorePlayer2 += points;
+                        scoreDisplay2.textContent = scorePlayer2;
+                        break;
                 }
-                inputAnswer.value = "";
-                modal.style.display = "none";
-            });
-        });
+                // Check if either player has reached 15,000 points
+                if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
+                    alert("Congratulations! Move on to Round 2.");
 
-        passButton.addEventListener("click", function () {
-            currentPlayer = switchPlayer();
-            alert(`${currentPlayer}, it's your turn to answer.`);
+                    buttonToRound2.disabled = false; // Enable the "Round 2" button
+                }
+                // To disable the cell
+                currentQuestion = null;
+                modal.style.display = "none";
+                c.innerHTML = "";
+                c.classList.remove("clickable-item");
+
+                // Check if the board has been cleared
+                const allCellsSelected = Array.from(tableCells).every(
+                    cell => cell.dataset.selected === "true"
+                );
+                if (allCellsSelected) {
+                    alert("Board cleared! Move on to Round 2.");
+
+                    buttonToRound2.disabled = false; // Enable the "Round 2" button
+                }
+                // WRONG ANSWER
+            } else {
+                switch (currentPlayer) {
+                    case player1:
+                        scorePlayer1 -= points;
+                        scoreDisplay1.textContent = scorePlayer1;
+                        break;
+                    case player2:
+                        scorePlayer2 -= points;
+                        scoreDisplay2.textContent = scorePlayer2;
+                        break;
+                }
+                otherPlayerTries()
+            }
+            inputAnswer.value = "";
+            modal.style.display = "none";
         });
     });
+
+    passButton.addEventListener("click", function () {
+        currentPlayer = changePlayer();
+        alert(`${currentPlayer}, it's your turn to answer.`);
+    });
+});
 
 
 
