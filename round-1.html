@@ -1,14 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jeopardy</title>
-  </head>
-  <body>
-    <h1>Round One</h1>
-    <!-- Do not change the script source. Allows import/export to work. -->
-    <script src="./scripts/index.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="round-1-2.css">
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel:wght@700&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- GOOGLE FONT 2 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel&family=Gloria+Hallelujah&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- GOOGLE FONT FOR THE TITLE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel&family=Gloria+Hallelujah&family=Press+Start+2P&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- ANIMATION -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <title>Jeopardy</title>
+</head>
+
+<body>
+  <h1 class="animate__animated animate__flip">Round One</h1>
+
+  <h2 class="animate__animated animate__flash" id="players-turn-display">Player One</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nature</th>
+        <th>Animals</th>
+        <th>Computers</th>
+        <th>Mythology</th>
+        <th>History</th>
+        <th>General</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="nature q1 clickable-item">100</td>
+        <td class="animals q1 clickable-item">100</td>
+        <td class="computers q1 clickable-item">100</td>
+        <td class="mythology q1 clickable-item">100</td>
+        <td class="history q1 clickable-item">100</td>
+        <td class="general q1 clickable-item">100</td>
+      </tr>
+      <tr>
+        <td class="nature q2 clickable-item">200</td>
+        <td class="animals q2 clickable-item">200</td>
+        <td class="computers q2 clickable-item">200</td>
+        <td class="mythology q2 clickable-item">200</td>
+        <td class="history q2 clickable-item">200</td>
+        <td class="general q2 clickable-item">200</td>
+      </tr>
+      <tr>
+        <td class="nature q3 clickable-item">300</td>
+        <td class="animals q3 clickable-item">300</td>
+        <td class="computers q3 clickable-item">300</td>
+        <td class="mythology q3 clickable-item">300</td>
+        <td class="history q3 clickable-item">300</td>
+        <td class="general q3 clickable-item">300</td>
+      </tr>
+      <tr>
+        <td class="nature q4 clickable-item">400</td>
+        <td class="animals q4 clickable-item">400</td>
+        <td class="computers q4 clickable-item">400</td>
+        <td class="mythology q4 clickable-item">400</td>
+        <td class="history q4 clickable-item">400</td>
+        <td class="general q4 clickable-item">400</td>
+      </tr>
+      <tr>
+        <td class="nature q5 clickable-item">500</td>
+        <td class="animals q5 clickable-item">500</td>
+        <td class="computers q5 clickable-item">500</td>
+        <td class="mythology q5 clickable-item">500</td>
+        <td class="history q5 clickable-item">500</td>
+        <td class="general q5 clickable-item">500</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="modal">
+    <div class="modal-content">
+      <h2 id="question"></h2>
+        <br>
+    <input placeholder="User Input.." id="input-answer">
+
+    <div id="div-user-buttons">
+      <button type="guess" class="user-buttons" id="guess-btn" disabled>GUESS</button>
+      <button type="pass" class="user-buttons" id="pass-btn" disabled>PASS</button>
+    </div>
+  </div>
+  </section>
+
+  <section id="score">
+    <p>Player 1 Score: <span id="scoreP1">0</span></p>
+    <p>Player 2 Score: <span id="scoreP2">0</span></p>
+  </section>
+
+  <div id="next-round" class="user-buttons">
+    <button id="next-round-btn" disabled>Next Round</button>
+  </div>
+
+  <footer>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contact Us</a>
+  </footer>
+
+  <!-- Do not change the script source. Allows import/export to work. -->
+  <!-- <script src="./scripts/index.js" type="module"></script> -->
+  <script src="./scripts/round-1.js" type="module"></script>
+</body>
+
 </html>

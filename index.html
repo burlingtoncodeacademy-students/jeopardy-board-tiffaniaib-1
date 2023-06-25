@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jeopardy</title>
-  </head>
-  <body>
-    <h1>Welcome to Jeopardy!</h1>
-    <!-- Do not change the script source. Allows import/export to work. -->
-    <script src="./scripts/index.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel:wght@700&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- GOOGLE FONT FOR THE TITLE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel&family=Gloria+Hallelujah&family=Press+Start+2P&family=Ultra&display=swap"
+    rel="stylesheet">
+    <!-- ANIMATION -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+  <title>Jeopardy</title>
+</head>
+
+<body>
+
+  <div id="container">
+
+    <h1 class="animate__animated animate__backInDown">Welcome to Jeopardy</h1>
+
+
+    <!-- Instead of using the img element, I created a div so I could apply the property "background-repeat" to it -->
+    <!-- and get the result desired for my image -->
+    <div id="hero"></div>
+
+    <a href="#">
+      <button id="button-play"> PLAY</button>
+    </a>
+
+    <footer>
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact Us</a>
+    </footer>
+  </div>
+
+  <script src="./scripts/index.js" type="module"></script>
+</body>
+
 </html>

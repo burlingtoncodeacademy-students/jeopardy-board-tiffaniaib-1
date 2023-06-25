@@ -1,15 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jeopardy</title>
-    <script src="./scripts/index.js" type="module"></script>
-  </head>
-  <body>
-    <h1>Second Round</h1>
-    <!-- Do not change the script source. Allows import/export to work. -->
-    <script src="./scripts/index.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="round-1-2.css">
+  <!-- GOOGLE FONT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel:wght@700&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- GOOGLE FONT 2 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel&family=Gloria+Hallelujah&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- GOOGLE FONT FOR THE TITLE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@1,700&family=Cinzel&family=Gloria+Hallelujah&family=Press+Start+2P&family=Ultra&display=swap"
+    rel="stylesheet">
+  <!-- ANIMATION -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <title>Jeopardy</title>
+  <script src="./scripts/index.js" type="module"></script>
+</head>
+
+<body>
+  <h1 class="animate__animated animate__flip">Second Round</h1>
+
+  <h2 class="animate__animated animate__flash" id="players-turn-display">Player One</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nature</th>
+        <th>Animals</th>
+        <th>Computers</th>
+        <th>Mythology</th>
+        <th>History</th>
+        <th>General</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="nature q6 clickable-item">200</td>
+        <td class="animals q6 clickable-item">200</td>
+        <td class="computers q6 clickable-item">200</td>
+        <td class="mythology q6 clickable-item">200</td>
+        <td class="history q6 clickable-item">200</td>
+        <td class="general q6 clickable-item">200</td>
+      </tr>
+      <tr>
+        <td class="nature q7 clickable-item">400</td>
+        <td class="animals q7 clickable-item">400</td>
+        <td class="computers q7 clickable-item">400</td>
+        <td class="mythology q7 clickable-item">400</td>
+        <td class="history q7 clickable-item">400</td>
+        <td class="general q7 clickable-item">400</td>
+      </tr>
+      <tr>
+        <td class="nature q8 clickable-item">600</td>
+        <td class="animals q8 clickable-item">600</td>
+        <td class="computers q8 clickable-item">600</td>
+        <td class="mythology q8 clickable-item">600</td>
+        <td class="history q8 clickable-item">600</td>
+        <td class="general q8 clickable-item">600</td>
+      </tr>
+      <tr>
+        <td class="nature q9 clickable-item">800</td>
+        <td class="animals q9 clickable-item">800</td>
+        <td class="computers q9 clickable-item">800</td>
+        <td class="mythology q9 clickable-item">800</td>
+        <td class="history q9 clickable-item">800</td>
+        <td class="general q9 clickable-item">800</td>
+      </tr>
+      <tr>
+        <td class="nature q10 clickable-item">1000</td>
+        <td class="animals q10 clickable-item">1000</td>
+        <td class="computers q10 clickable-item">1000</td>
+        <td class="mythology q10 clickable-item">1000</td>
+        <td class="history q10 clickable-item">1000</td>
+        <td class="general q10 clickable-item">1000</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section id="modal">
+    <div class="modal-content">
+      <h2 id="question"></h2>
+      <br>
+      <input placeholder="User Input.." id="input-answer">
+
+      <div id="div-user-buttons">
+        <button type="guess" class="user-buttons" id="guess-btn" disabled>GUESS</button>
+        <button type="pass" class="user-buttons" id="pass-btn" disabled>PASS</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="score">
+    <p>Player 1 Score: <span id="scoreP1">0</span></p>
+    <p>Player 2 Score: <span id="scoreP2">0</span></p>
+  </section>
+
+  <div id="next-round" class="user-buttons">
+    <button id="next-round-btn" disabled>Next Round</button>
+  </div>
+
+  <footer>
+    <a href="#">Terms of Use</a>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Contact Us</a>
+  </footer>
+
+  <!-- <script src="./scripts/index.js" type="module"></script> -->
+  <script src="./scripts/round-2.js" type="module" ></script>
+</body>
+
 </html>

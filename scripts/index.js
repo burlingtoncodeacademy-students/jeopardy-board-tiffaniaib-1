@@ -1,3 +1,6 @@
-// Do not change the import statement
-import placeholderQuestions from "./placeholder-questions.js";
-console.log({ placeholderQuestions });
+const playButton = document.getElementById("button-play");
+playButton.addEventListener("click", function () {
+    window.location.href = "round-1.html";
+});
+
+
