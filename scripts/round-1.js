@@ -4,12 +4,8 @@ import placeholderQuestions from "./placeholder-questions.js";
 console.log({ placeholderQuestions });
 
 const buttonToRound2 = document.getElementById("next-round-btn");
-console.log(buttonToRound2);
-buttonToRound2.addEventListener("click", function () {
-    window.location.href = "round-2.html";
-});
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
     alert(`It's ${currentPlayer}'s turn!`);
 });
 
@@ -20,92 +16,15 @@ const passButton = document.querySelector("#pass-btn");
 const nextRoundButton = document.querySelectorAll("#next-round-btn")
 let inputAnswer = document.querySelector("#input-answer");
 
-
-
 //--------------------------------------------------------------------
 const modal = document.querySelector("#modal");
-let currentQuestion;
-let words;  // the value to this variable will be assigned in the function Titleize
+// let currentQuestion;
 
-
-//? Functions
+//? Function
 function changePlayer() {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
     playersTurnDisplay.textContent = currentPlayer;
     return currentPlayer;
-}
-
-// Function to display the alert
-function showPlayersTurn() {
-    // We want for the alert to be displayed in all the pages but the index.html
-    // const urlIndexHTML = window.location.href --> http://127.0.0.1:5501/
-    // when at this URL we won't show the alert
-
-    let currentPageURL = window.location.href;
-    if (currentPageURL === "http://127.0.0.1:5501/") {
-        return;
-    } else {
-        alert(`It's ${currentPlayer}'s turn!`);
-        // To disable the buttons:
-        const userButtons = document.getElementsByClassName("user-buttons"); // first we select all the buttons and wrap them in one variable
-        userButtons.disabled = true;
-    }
-}
-
-function otherPlayerTries() {
-    changePlayer();
-    alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
-    if (words === currentQuestion.answer) {
-        switch (currentPlayer) {
-            case player1:
-                scorePlayer1 += points;
-                scoreDisplay1.textContent = scorePlayer1;
-                break;
-            case player2:
-                scorePlayer2 += points;
-                scoreDisplay2.textContent = scorePlayer2;
-                break;
-        }
-        // Check if either player has reached 15,000 points
-        if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
-            console.log(`this line`)
-            alert("Congratulations! Move on to Round 2.");
-            nextRoundButton.removeAttribute("disabled") // Enable the "Round 2" button
-        }
-        // To disable the cell
-        currentQuestion = null;
-        modal.style.display = "none";
-        c.innerHTML = "";
-        c.classList.remove("clickable-item");
-
-        // Check if the board has been cleared
-        const allCellsSelected = Array.from(tableCells).every(
-            cell => cell.dataset.selected === "true"
-        );
-        if (allCellsSelected) {
-            alert("Board cleared! Move on to Round 2.");
-
-            buttonToRound2.disabled = false; // Enable the "Round 2" button
-        }
-        // WRONG ANSWER
-    } else {
-        switch (currentPlayer) {
-            case player1:
-                scorePlayer1 -= points;
-                scoreDisplay1.textContent = scorePlayer1;
-                break;
-            case player2:
-                scorePlayer2 -= points;
-                scoreDisplay2.textContent = scorePlayer2;
-                break;
-        }
-    }
-    // Disable the "Round 2" button if neither player has reached 15,000 points
-    if (scorePlayer1 < 15000 && scorePlayer2 < 15000) {
-        console.log(`this line`)
-        alert("Congratulations! Move on to Round 2.");
-        buttonToRound2.removeAttribute("disabled");
-    }
 }
 
 //? Players
@@ -161,14 +80,14 @@ let offSet = 0;
 
 //? CELLS AND CORRISPONDING OF QUESTIONS
 // We add an event listener to each cell of the table
-tableCells.forEach(c => {
-    c.addEventListener("click", function () {
-        if (c.dataset.selected === "true") {
+tableCells.forEach(cell => {
+    cell.addEventListener("click", function () {
+        if (cell.dataset.selected === "true") {
             alert("Please pick a question.");
             return;
         }
 
-        const [category, value] = c.classList;
+        const [category, value] = cell.classList;
         offSet = value[1];
 
         const offSetToNumber = parseInt(offSet) - 1;
@@ -176,7 +95,8 @@ tableCells.forEach(c => {
         alert(`Category ${category}, Worth $${offSet + '00'}`);
         modal.style.display = "block";
 
-        currentQuestion = qmap[category][offSetToNumber];
+        let currentQuestion = qmap[category][offSetToNumber];
+
 
         const questionDisplay = document.querySelector("#question");
         questionDisplay.textContent = currentQuestion.question;
@@ -185,34 +105,35 @@ tableCells.forEach(c => {
 
 
         // Update the selected state of the cell
-        c.dataset.selected = "true";
-        c.style.backgroundColor = "rgba(103, 4, 4, 0.8)";
+        cell.dataset.selected = "true";
+        cell.style.backgroundColor = "rgba(103, 4, 4, 0.8)";
+
 
         guessButton.addEventListener("click", function () {
-            const playerAnswer = inputAnswer.value;
-            const points = parseInt(offSet) * 100;
             // RIGHT ANSWER
-            if (playerAnswer.toLowerCase() === currentQuestion.answer.toLowerCase()) {
+            if (inputAnswer.value.toLowerCase().trim() == currentQuestion.answer.toLowerCase().trim()) {
+                console.log(inputAnswer.value, currentQuestion.answer)
                 switch (currentPlayer) {
                     case player1:
-                        scorePlayer1 += points;
+                        scorePlayer1 += Number(cell.textContent);
+                        console.log(scoreDisplay1)
                         scoreDisplay1.textContent = scorePlayer1;
                         break;
                     case player2:
-                        scorePlayer2 += points;
+                        scorePlayer2 += Number(cell.textContent);
                         scoreDisplay2.textContent = scorePlayer2;
                         break;
                 }
                 // Check if either player has reached 15,000 points
                 if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
                     alert("Congratulations! Move on to Round 2.");
-                    nextRoundButton.removeAttribute("disabled");
+                    nextRoundButton.disabled = false;
                 }
                 // To disable the cell
-                currentQuestion = null;
-                modal.style.display = "none";
-                c.innerHTML = "";
-                c.classList.remove("clickable-item");
+                // currentQuestion = null;
+                // modal.style.display = "none";
+                // c.innerHTML = "";
+                // c.classList.remove("clickable-item");
 
                 // Check if the board has been cleared
                 const allCellsSelected = Array.from(tableCells).every(
@@ -220,42 +141,103 @@ tableCells.forEach(c => {
                 );
                 if (allCellsSelected) {
                     alert("Board cleared! Move on to Round 2.");
-                    nextRoundButton.removeAttribute("disabled");
+                    nextRoundButton.disabled = false;
                 }
                 // WRONG ANSWER
-            } else if (words !== currentQuestion.answer) {
+            } else if (inputAnswer.value.toLowerCase().trim() != currentQuestion.answer.toLowerCase().trim()) {
                 switch (currentPlayer) {
                     case player1:
-                        scorePlayer1 -= points;
+                        scorePlayer1 -= Number(cell.textContent);
                         scoreDisplay1.textContent = scorePlayer1;
                         break;
                     case player2:
-                        scorePlayer2 -= points;
+                        scorePlayer2 -= Number(cell.textContent);
                         scoreDisplay2.textContent = scorePlayer2;
                         break;
                 }
-                otherPlayerTries()
+                changePlayer();
+                alert(`The original player answered incorrectly. It's now ${currentPlayer}'s turn to answer.`);
+                
+                if (inputAnswer.value.toLowerCase().trim() == currentQuestion.answer.toLowerCase().trim()) {
+                    switch (currentPlayer) {
+                        case player1:
+                            scorePlayer1 += Number(cell.textContent);
+                            scoreDisplay1.textContent = scorePlayer1;
+                            break;
+                        case player2:
+                            scorePlayer2 += Number(cell.textContent);
+                            scoreDisplay2.textContent = scorePlayer2;
+                            break;
+                    }
+                
+                    // Check if either player has reached 15,000 points
+                    if (scorePlayer1 >= 15000 || scorePlayer2 >= 15000) {
+                        console.log(`this line`)
+                        alert("Congratulations! Move on to Round 2.");
+                        nextRoundButton.disabled = false;
+                    }
+                    // To disable the cell
+                    // currentQuestion = null;
+                    // modal.style.display = "none";
+                    // c.innerHTML = "";
+                    // c.classList.remove("clickable-item");
+
+                    // Check if the board has been cleared
+                    const allCellsSelected = Array.from(tableCells).every(
+                        cell => cell.dataset.selected === "true"
+                    );
+                    if (allCellsSelected) {
+                        alert("Board cleared! Move on to Round 2.");
+
+                        nextRoundButton.disabled = false; // Enable the "Round 2" button
+                    }
+                    // WRONG ANSWER
+                } else {
+                    switch (currentPlayer) {
+                        case player1:
+                            scorePlayer1 -= Number(cell.textContent);
+                            scoreDisplay1.textContent = scorePlayer1;
+                            break;
+                        case player2:
+                            scorePlayer2 -= Number(cell.textContent);
+                            scoreDisplay2.textContent = scorePlayer2;
+                            break;
+                    }
+                    currentPlayer = changePlayer(); // Change player only if the other player's answer is wrong
+        alert(`Both players answered incorrectly.${currentPlayer} gets to pick another question.`);
+
+                }
+                
             }
             inputAnswer.value = "";
             modal.style.display = "none";
         });
+
+
+
+        passButton.addEventListener("click", function () {
+            console.log(currentPlayer)
+            switch (currentPlayer) {
+                case player1:
+                    scorePlayer1 -= Number(cell.textContent);
+                    scoreDisplay1.textContent = scorePlayer1;
+                    break;
+                case player2:
+                    scorePlayer2 -= Number(cell.textContent);
+                    scoreDisplay2.textContent = scorePlayer2;
+                    break;
+            }
+            console.log("before the change this is the current player:" + currentPlayer)
+            currentPlayer = changePlayer();
+            console.log("after the change this is the current player:" + currentPlayer)
+            alert(`${currentPlayer}, it's your turn to answer.`);
+        });
+
     });
 });
 
+buttonToRound2.addEventListener("click", function () {
+    window.location.href = `round-2.html?scorePlayer1=${scorePlayer1}&scorePlayer2=${scorePlayer2}`; // this way we are passing data to the next page
+})
 
 
-passButton.addEventListener("click", function () {
-    const points = parseInt(offSet) * 100;
-    switch (currentPlayer) {
-        case player1:
-            scorePlayer1 -= points;
-            scoreDisplay1.textContent = scorePlayer1;
-            break;
-        case player2:
-            scorePlayer2 -= points;
-            scoreDisplay2.textContent = scorePlayer2;
-            break;
-    }
-    currentPlayer = changePlayer();
-    alert(`${currentPlayer}, it's your turn to answer.`);
-});

@@ -19,8 +19,10 @@ let currentPlayer = player1;
 //? Scores
 let scoreDisplay1 = document.getElementById("scoreP1");
 let scoreDisplay2 = document.getElementById("scoreP2");
-let scorePlayer1 = 0;
-let scorePlayer2 = 0;
+let scoresRound1 = document.location.search
+let scorePlayer1 = Number(params.get("scorePlayer1"))
+let scorePlayer2 = Number(params.get("scorePlayer2"));
+
 
 
 
